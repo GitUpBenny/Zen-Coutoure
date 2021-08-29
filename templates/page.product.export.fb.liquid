@@ -1,0 +1,120 @@
+{% layout none %}
+
+{%- comment -%} Capture the content for header containing the tracking data {%- endcomment -%}
+{%- capture contentForQuerystring -%}{{ content_for_header }}{%- endcapture -%}
+
+{% comment %} Use string splitting to pull the value from content_for_header and apply some string clean up {% endcomment %}
+{%- assign pageUrl = contentForQuerystring | split:'"pageurl":"' | last | split:'"' | first | split:'.myshopify.com' | last |
+   replace:'\/','/' | 
+   replace:'%20',' ' | 
+   replace:'\u0026','&'
+-%}
+
+{% assign debug = false %}
+
+{%- for i in (1..1) -%}
+  {%- comment -%} If the string doesn't contain a ? then we have no querystring. Go no further {%- endcomment -%}
+  {%- unless pageUrl contains "?" -%}{% break %}{%- endunless -%}
+
+  {%- comment -%} Only work when the cache qs is used. Be aware of the perf issues with using cache=false {%- endcomment -%}
+  {%- unless pageUrl contains "cache=false" -%}{% break %}{%- endunless -%}
+
+  {%- comment -%} Split the url at the ? to get all values after it {%- endcomment -%}
+  {%- assign pageQuerystring = pageUrl | split:'?' | last -%}
+
+  {%- comment -%} Split the remaining string at & to get the list of keys and values (if any) {%- endcomment -%}
+  {%- assign parts = pageQuerystring | split:'&' -%}
+
+  {%- comment -%} Loop over them... {%- endcomment -%}
+  {%- for part in parts -%}
+
+    {%- comment -%} Split the part at the =. Not all querystrings will be in pairs so we need to account for that {%- endcomment -%}
+    {%- assign keyAndValue = part | split:'=' -%}
+
+    {%- if keyAndValue.size > 1 -%}
+      {%- if debug -%}
+       <!--
+        key: {{ keyAndValue[0] }}<br>
+        value: {{ keyAndValue[1] }}<br>
+      -->
+      {% endif %}
+
+      {%- comment -%}And for an example. If the querystring key was "tag" do something {%- endcomment -%}
+
+      {% if keyAndValue[0] == "tag" %}
+
+	  {%- assign ctag = keyAndValue[1] | split:"," -%} {%- comment -%} Split the part 2nd part for Facebook category and 3rd part for Google Category {%- endcomment -%}
+ 
+      {
+		"products": [
+
+          {% paginate collections[ctag[0]].products by 1000 %}
+            {% for product in collections[ctag[0]].products %}
+				{% for variant in product.variants %}
+					{% if product.variants.first.inventory_quantity > 0 %}
+                      {
+                          "item_group_id": {{ product.id }},
+						  "id": "{{ variant.id }}",
+                          "title": {{ product.title | json }},
+						  "visibility":"published",
+                          "description": {{ product.metafields.global.description_tag | json}},
+						  "condition":"new",
+						  "availability": "{% if variant.available %}In Stock{% else %}Out Of Stock{% endif %}",
+                          "price": "{{ product.price | money_without_currency }} {{ shop.currency }}",{%- assign utm_source_tag = '?utm_source=Facebook&utm_medium=Catalog&utm_campaign=Ads&utm_content=' | append: ctag[3] -%}
+                          "link": "{{ shop.url }}{{ product.url }}{{ utm_source_tag }}", {% if variant.image.src %}{%- assign img_main = variant.image.src | product_img_url: 'grande' -%}{% else %}{%- assign img_main = product.featured_image.src | product_img_url: 'grande' -%}{% endif %}
+                          "image_link":{{ 'https:' | append: img_main | json }},
+                          "brand": {{ product.vendor | strip | json}},
+                          "inventory": {{ product.variants.first.inventory_quantity | json}},
+                          "identifier_exists": {{ "no" | json}},
+						              "shipping_weight": {{ product.variants.first.weight | weight_with_unit | json }},
+                          "fb_product_category":{{ctag[1]}},
+                          "google_product_category":{{ctag[2]}}
+						  
+{%- comment -%}
+                          "fb_product_category":334,
+                          "google_product_category":683,
+
+
+                          "variants" : [
+                            {% for variant in product.variants %}
+                                {
+                                    "id": "{{ variant.id }}"
+                                },
+                            {% endfor %}
+                            {"nullKey": null}
+                          ],
+                          "images": [
+                            {% for image in product.images %}
+                                {
+                                "id": {{ image.id | json}},
+                                "product_id": {{ image.product_id | json}},
+                                "position": {{ image.position | json}},
+                                "src": {{ image.src | asset_img_url | json}},
+                                "alt": {{ image.alt | json}}
+                                },
+                            {% endfor %}
+                            {"nullKey": null}
+                            ]
+{%- endcomment -%}
+                      },
+					{% endif %}
+               {% endfor %}
+            {% endfor %}
+			
+          {% endpaginate %}
+          {"nullKey": null}
+        ]
+      }
+      {% endif %}
+    {%- else -%}
+     {%- if debug -%}
+      <!-- 
+        value: {{ keyAndValue }}
+      -->
+      {%- endif -%}
+    {%- endif -%}
+
+  {%- endfor -%}
+{%- endfor -%}
+
+

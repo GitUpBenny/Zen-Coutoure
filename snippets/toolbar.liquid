@@ -1,0 +1,48 @@
+<div class="toolbar">
+  {% if settings.layout_collections_page == "style_right_sidebar" %}
+  <button onclick="location.href='javascript:void(0)'" type="button" class="halo-fillter" rel="nofollow">
+	{% include 'icon_filter' %}
+    <span {% if settings.enable_multilang %}data-translate="collections.toolbar.refine"{% endif %}>{{ 'collections.toolbar.refine' | t }}</span>
+  </button>
+  {% else %}
+  
+  {% unless settings.display_sidebar_cat_page == false %}
+  <button onclick="location.href='javascript:void(0)'" type="button" class="halo-fillter" rel="nofollow">
+	{% include 'icon_filter' %}
+    <span {% if settings.enable_multilang %}data-translate="collections.toolbar.refine"{% endif %}>{{ 'collections.toolbar.refine' | t }}</span>
+  </button>
+  {% endunless %}
+  
+  {% endif %}
+  
+  <div class="view-mode">
+    <label data-translate="collections.toolbar.view_as">{{ 'collections.toolbar.view_as' | t}}</label>
+    <button onclick="location.href='javascript:void(0)'" type="button"rel="nofollow" class="view-one{% if section.settings.collection_results_per_row == '1' %} active{% endif %}"></button>
+    <button onclick="location.href='javascript:void(0)'" type="button"rel="nofollow" class="view-two{% if section.settings.collection_results_per_row == '2' %} active{% endif %}"></button>
+    <button onclick="location.href='javascript:void(0)'" type="button"rel="nofollow" class="view-three{% if section.settings.collection_results_per_row == '3' %} active{% endif %}"></button>
+    <button onclick="location.href='javascript:void(0)'" type="button"rel="nofollow" class="view-four{% if section.settings.collection_results_per_row == '4' %} active{% endif %}"></button>
+    <button onclick="location.href='javascript:void(0)'" type="button"rel="nofollow" class="view-five{% if section.settings.collection_results_per_row == '5' %} active{% endif %}"></button>
+  </div>
+
+  <div class="filter-sortby btn-group">
+    <label for="sort-by" {% if settings.enable_multilang %}data-translate="collections.sorting.title"{% endif %}>
+      {{ 'collections.sorting.title' | t }}
+    </label> 
+    <button class="btn btn-2" data-toggle="dropdown">
+      <span class="label-text"></span>
+      <i class="fa fa-angle-down"></i>
+    </button>
+
+    <ul class="dropdown-menu" role="menu">
+      <li class="active"><span data-href="manual" {% if settings.enable_multilang %}data-translate="collections.sorting.featured"{% endif %}>{{ 'collections.sorting.featured' | t }}</span></li>
+      <li><span data-href="price-ascending" {% if settings.enable_multilang %}data-translate="collections.sorting.price_ascending"{% endif %}>{{ 'collections.sorting.price_ascending' | t }}</span></li>
+      <li><span data-href="price-descending" {% if settings.enable_multilang %}data-translate="collections.sorting.price_descending"{% endif %}>{{ 'collections.sorting.price_descending' | t }}</span></li>
+      <li><span data-href="title-ascending" {% if settings.enable_multilang %}data-translate="collections.sorting.az"{% endif %}>{{ 'collections.sorting.az' | t }}</span></li>
+      <li><span data-href="title-descending" {% if settings.enable_multilang %}data-translate="collections.sorting.za"{% endif %}>{{ 'collections.sorting.za' | t }}</span></li>
+      <li><span data-href="created-ascending" {% if settings.enable_multilang %}data-translate="collections.sorting.date_ascending"{% endif %}>{{ 'collections.sorting.date_ascending' | t }}</span></li>
+      <li><span data-href="created-descending" {% if settings.enable_multilang %}data-translate="collections.sorting.date_descending"{% endif %}>{{ 'collections.sorting.date_descending' | t }}</span></li>
+      <li><span data-href="best-selling" {% if settings.enable_multilang %}data-translate="collections.sorting.best_selling"{% endif %}>{{ 'collections.sorting.best_selling' | t }}</span></li>
+    </ul>
+  </div>
+
+</div>

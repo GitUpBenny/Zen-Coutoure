@@ -1,0 +1,104 @@
+{% layout none %}{% comment %}    
+/*
+ * Shopify Product RSS feed, also needs Cloudflare Workers
+ * for Content-Type fix to application/rss+xml, because
+ * Shopify only supports text/html
+ *
+ * Copyright (c) 2018 @fmt github.com/fmt
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/mit-license.php
+ * Based on @freakdesign blog feed gist
+ */ 
+{% endcomment %}{% capture feedSettings %}
+
+  {% assign feedTitle = 'Product Feed' %}
+  {% assign feedDescription = 'Store Products RSS Feed' %}
+
+  {% comment %}
+    How many products to show
+  {% endcomment %}
+  {% assign productCount = 1000 %}
+
+  {% comment %}
+    Either to include the product collections
+  {% endcomment %}
+  {% assign showCollections = true %}
+
+  {% comment %}
+    Set image size
+  {% endcomment %}
+  {% assign imageSize = 'grande' %}
+
+  {% comment %}
+    Either to truncate description and content, after how many words
+  {% endcomment %}
+  {% assign truncateDescription = true %}
+  {% assign truncateContent = false %}
+  {% assign truncateAfter = 50 %}
+
+  {% comment %}
+    Force content to plain text, if HTML breaks syntax
+  {% endcomment %}
+  {% assign plainText = false %}
+  {% assign gage = "ADULT" %}
+  {% assign ggender = "FEMALE" %}
+  {% assign gidentifier_exists = "FALSE" %} 
+  {% comment %}
+    Remove CDATA tags, needed if the content already has them
+  {% endcomment %}
+  {% assign removeCdataTags = true %}{% endcapture %}<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" 
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+  xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+  xmlns:media="http://search.yahoo.com/mrss/"
+  xmlns:g="http://base.google.com/ns/1.0"
+  >
+ <channel>
+	<title>{{ shop.name }} - {{ feedTitle }}</title>
+	<atom:link href="{{ canonical_url }}?view=rss" rel="self" type="application/rss+xml"/>
+	<link>{{ canonical_url }}</link>
+	<description>{{ feedDescription | strip | capitalize }}</description>
+   <lastBuildDate>{{ collection.products.first.created_at | date: "%a, %d %b %Y %H:%M:%S %z" }}</lastBuildDate>
+	<language>{{ shop.locale }}</language>
+	<sy:updatePeriod>daily</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+  {% paginate collection.products by productCount %}{% for product in collection.products %}{%- assign GoogleProductCategory = product.metafields.mm-google-shopping.google_product_category -%}{%- assign GoogleProductType = product.metafields.mm-google-shopping.google_product_type -%}
+ <item>     
+     <pubDate>{{ product.created_at | date: "%a, %d %b %Y %H:%M:%S %z" }}</pubDate>
+     <dc:creator><![CDATA[{{ product.author | default: shop.name | strip }}]]></dc:creator>{% if showCollections %}{% assign prodCollections = '' | strip %}{% for collection in product.collections %}{% assign prodCollections = prodCollections | prepend: collection.title | prepend: ',' | strip %}{% endfor %}{% assign prodCollectionsLast = prodCollections | remove_last: ',' | strip %}
+     <category><![CDATA[{{ prodCollectionsLast | remove_first: ',' | strip}}]]></category>{% endif %}
+     <guid isPermaLink="true">{{ shop.url }}{{ product.url }}</guid>
+     {% if truncateContent %}<content:encoded>{{ productContent | escape | truncate_words:truncateAfter | capitalize }}</content:encoded>{% elsif plainText %}<content:encoded>{{ productContent | escape | capitalize }}</content:encoded>{% else %}<content:encoded><![CDATA[{{ productContent | replace:'<br>','<br/>' | capitalize }}]]></content:encoded>{% endif %}{% if product.featured_image %}
+     <media:content url="https:{{ product.featured_image | img_url: imageSize | cdata }}"/>{% endif %}     
+     <g:id>{{ product.id }}</g:id> 
+     <title>{{ product.title | escape}}</title>
+     <description>{% if truncateDescription %}{{ product.metafields.global.description_tag | escape | truncatewords: truncateAfter | strip | capitalize }}{% else %}{{ product.metafields.global.description_tag | escape | strip | capitalize }}{% endif %}</description>
+     <g:product_type>{{product.type | escape | strip}}</g:product_type>{% if variant.title contains 'dress' %}<g:google_product_category>{{ "Apparel & Accessories > Clothing > Dresses" | escape}}</g:google_product_category>{% elsif variant.title contains 'jumpsuits' %}<g:google_product_category>{{ "Apparel & Accessories > Clothing > One-Pieces > Jumpsuits & Rompers" | escape}}</g:google_product_category>{% elsif variant.title contains 'pants' %}<g:google_product_category>{{"Apparel & Accessories > Clothing > Pants"| escape}}</g:google_product_category>{% elsif variant.title contains 'shirt' %}<g:google_product_category>{{"Apparel & Accessories > Clothing > Shirts & Tops"| escape}}</g:google_product_category>{% elsif variant.title contains 'short' %}<g:google_product_category>{{"Apparel & Accessories > Clothing > Shorts"| escape}}</g:google_product_category>{% elsif variant.title contains 'skirt' %}<g:google_product_category>{{"Apparel & Accessories > Clothing > Skirts"| escape}}</g:google_product_category>{% elsif variant.title contains 'lingerie' %}<g:google_product_category>{{"Apparel & Accessories > Clothing > Underwear & Socks > Lingerie"| escape}}</g:google_product_category>{% elsif variant.title contains 'sleep' %}<g:google_product_category>{{"Apparel & Accessories > Clothing > Sleepwear & Loungewear"| escape}}</g:google_product_category>{% else %}<g:google_product_category>{{"Apparel & Accessories > Clothing"| escape}}</g:google_product_category>{%endif%}
+     <link>{{ shop.url }}{{ product.url }}</link>
+     {% if product.featured_image %}<g:image_link>https:{% if product.image.src %}{{ product.image.src | product_img_url: 'grande' }}{% else %}{{ product.featured_image.src | product_img_url: 'grande' }}{% endif %}</g:image_link>{% endif %}     
+     <g:condition>New</g:condition>
+     <g:availability>{% if product.available %}In Stock{% else %}Out Of Stock{% endif %}</g:availability>
+     <g:price>{{ product.price | money_without_currency }} {{ shop.currency }}</g:price>{%comment%}<g:identifier_exists>{{ gidentifier_exists | cdata }}</g:identifier_exists><g:google_product_category>{{ GoogleProductCategory | replace: '&', '&'  }}</g:google_product_category><g:google_product_type>{{ GoogleProductType | replace: '&', '&'  }}</g:google_product_type><sale_price></sale_price>{%endcomment%}     
+     <g:ean></g:ean>
+     <g:mpn></g:mpn>
+     <g:brand>{{ product.vendor | strip | escape }}</g:brand>
+     <g:custom_label_0>{{ collection.title | strip }}</g:custom_label_0>
+     <g:tax>
+      <g:country>US</g:country>
+      <g:rate>0</g:rate>
+      <g:tax_ship>n</g:tax_ship>
+     </g:tax>
+     <g:shipping>
+         <g:country>US</g:country>
+         <g:price>6.00 USD</g:price>
+     </g:shipping>
+     <g:identifier_exists>FALSE</g:identifier_exists>{% assign productContent = product.metafields.global.description_tag | capitalize %}{% if removeCdataTags %}{% assign productContent = productContent | remove:'<![CDATA[' | remove:']]' | capitalize %}{% endif %}
+   </item>
+    {% endfor %}
+    {% endpaginate %}
+ </channel>
+</rss>

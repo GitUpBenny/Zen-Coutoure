@@ -1,0 +1,28 @@
+{% layout none %}
+
+<h1>{{ page_title }}</h1>
+
+
+  
+  <table>
+  <tr>
+    <th>Collection Title</th>
+    <th>Feed URL</th>
+  </tr> 
+ {%- for collection in collections -%}
+ {% if collection.products.size > 0 %}  
+  <tr>
+  <td>
+        Zen Coutoure - {{ collection.title }} - NO LIVE
+
+  </td> 
+   
+  <td>
+      <a href="{{ collection.url }}">
+      https://zencoutoure.com/pages/product-generate?tag={{ collection.title | replace: " ", "-" }},fb_catalog_id,g_catalog_id,{{ collection.title | replace: " ", "-"  }}&cache=false
+      </a>
+  </td>
+  </tr>
+  {% endif %}
+    {%- endfor -%}   
+  </table>   

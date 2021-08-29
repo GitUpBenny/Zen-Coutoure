@@ -1,0 +1,48 @@
+<div class="article-product">
+  {% if section.settings.title != blank %}
+  <div class="widget-title">
+    <h3>
+      {% include 'multilang' with section.settings.title %}
+    </h3>
+  </div>
+  {% endif %}
+  
+  <div class="widget-content row">
+    {% for block in section.blocks %} 
+    {%- assign product = all_products[block.settings.product] -%}
+    <div class="col-6 col-sm-6 col-md-4 grid-item">
+      {% include 'product-grid-item' %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Article Widget Product",
+	"max_blocks": 6,
+    "settings": [      
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Current Top Sellers"
+      }
+      	    	  
+	],
+	
+	"blocks" : [
+      {
+        "type": "image",
+        "name": "Article Product",
+        "settings": [
+          {
+            "type" : "product",
+            "id" : "product",
+            "label" :"Select Product"
+          }          
+        ]
+      }
+	]
+  }
+{% endschema %}

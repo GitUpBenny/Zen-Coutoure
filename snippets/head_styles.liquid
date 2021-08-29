@@ -1,0 +1,41 @@
+{%comment%}
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{{ 'jquery.fancybox.css' | asset_url | stylesheet_tag }}
+{{ 'bootstrap.min.css' | asset_url | stylesheet_tag }}
+{%endcomment%}
+
+<!-- core asynchronous functionality -->
+  <link data-cfasync='true' rel="stylesheet" href="{{ 'style.scss.css' | asset_url }}" media="print" onload="this.media='all'; this.onload=null; this.removeAttribute('media');">
+  <link data-cfasync='true' rel="stylesheet" href="{{ 'bootstrap.min.css' | asset_url }}" media="print" onload="this.media='all'; this.onload=null; this.removeAttribute('media');">
+  <link data-cfasync='true' rel="stylesheet" href="{{ 'style-responsive.scss.css' | asset_url }}" media="print" onload="this.media='all'; this.onload=null; this.removeAttribute('media');">
+  <link data-cfasync='true' rel="stylesheet" href="{{ 'jquery.fancybox.css' | asset_url }}" media="print" onload="this.media='all'; this.onload=null; this.removeAttribute('media');">
+  <link data-cfasync='true' rel="script" href="//ajax.googleapis.com/ajax/libs/webfont/1/webfont.js" media="print" onload="this.media='all'; this.onload=null; this.removeAttribute('media');">
+
+<!-- no-JS fallback -->
+<noscript>
+    <link rel="stylesheet" href="{{ 'style.scss.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'bootstrap.min.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'style-responsive.scss.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'jquery.fancybox.css' | asset_url }}">
+</noscript>
+
+
+{% if template == 'list-collections'  %}
+<link rel="stylesheet" href="{{ 'list-collections.scss.css' | asset_url }}" media="print" onload="this.media='all'; this.onload=null; this.removeAttribute('media');">
+<noscript>
+<link href="{{ 'list-collections.scss.css' | asset_url }}">
+</noscript>
+{% elsif template == 'cart' %}
+<link rel="stylesheet" href="{{ 'cart-page.scss.css' | asset_url }}" media="print" onload="this.media='all'; this.onload=null; this.removeAttribute('media');">
+<noscript>
+<link href="{{ 'cart-page.scss.css' | asset_url }}">
+</noscript>
+{% elsif template contains 'page' or template contains 'customers' %}
+<link rel="stylesheet" href="{{ 'layout-page-customer.scss.css' | asset_url }}" media="print" onload="this.media='all'; this.onload=null; this.removeAttribute('media');">
+<noscript>
+<link href="{{ 'layout-page-customer.scss.css' | asset_url }}">
+</noscript>
+{% endif %}
+
+

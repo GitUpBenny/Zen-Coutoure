@@ -1,0 +1,22 @@
+{% if settings.layout_collections_page == "default" %} 
+{% include 'collection-default' %}
+
+{% elsif settings.layout_collections_page == "mansory" %}
+{% include 'collection-mansory' %} 
+
+{% elsif settings.layout_collections_page == "style_banner" %}
+{% include 'collection-style-banner' %}
+
+{% elsif settings.layout_collections_page == "style_right_sidebar" %} 
+{% include 'collection-default' %}
+
+{% elsif settings.layout_collections_page == "style_without" %} 
+{% include 'collection-default' %}
+
+{% elsif settings.layout_collections_page == "full" %} 
+{% include 'collection-default' %}
+
+{% elsif settings.layout_collections_page == "style_express_order" %} 
+{% include 'collection-express-order' %}
+{% endif %}
+

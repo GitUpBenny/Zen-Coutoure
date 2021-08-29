@@ -1,0 +1,41 @@
+{% comment %}Jose Customized - Original Managed by ShopSheriff Shopify app{% endcomment %}
+
+{% if template contains 'blog' %}
+  {% assign amp_path = '/blogs/' | append: blog.handle %}
+{% endif %}
+
+{% if template contains 'page' %}
+  {% assign amp_path = '/pages/' | append: page.handle %}
+{% endif %}
+
+{% if template contains 'article' %}
+  {% assign amp_path = article.url %}
+{% endif %}
+
+{% if template contains 'product' %}
+  {% assign amp_path = '/products/' | append: product.handle %}
+{% endif %}
+
+{% if template contains 'collection' %}
+  {% unless collection.handle == 'all' %}
+  {% unless current_tags %}
+  {% unless collection.current_type %}
+  {% unless collection.current_vendor %}
+  {% if collection.products_count %}
+    {% assign amp_path = '/collections/' | append: collection.handle %}
+    {% if current_page > 1 %}
+	
+      {% assign amp_path = amp_path | append: '?page=' | append: current_page %}
+    {% endif %}
+  {% endif %}
+  {% endunless %}
+  {% endunless %}
+  {% endunless %}
+  {% endunless %}
+{% endif %}
+<script type="text/javascript">var _0x4b16=['mark','shopsheriff.amp-snippet.start','/cart','includes','ampproject.org','referrer','location','utm','search','utm_source=shopsheriff&utm_medium=amp&utm_campaign=shopsheriff&utm_content=add-to-cart','shopsheriff.amp-snippet.end','performance'];(function(_0x105340,_0x49b508){var _0x398fbc=function(_0x1d50a8){while(--_0x1d50a8){_0x105340['push'](_0x105340['shift']());}};_0x398fbc(++_0x49b508);}(_0x4b16,0x1a3));var _0x5ca0=function(_0x23b5e7,_0x295668){_0x23b5e7=_0x23b5e7-0x0;var _0x3d5658=_0x4b16[_0x23b5e7];return _0x3d5658;};var a=window[_0x5ca0('0x0')]&&window[_0x5ca0('0x0')]['mark'];if(a){window[_0x5ca0('0x0')][_0x5ca0('0x1')](_0x5ca0('0x2'));}var doc=document;var redirect=_0x5ca0('0x3')===window['location']['pathname']&&(doc['referrer'][_0x5ca0('0x4')](_0x5ca0('0x5'))||doc[_0x5ca0('0x6')][_0x5ca0('0x4')]('/a/s/'))&&!doc[_0x5ca0('0x7')]['search']['includes'](_0x5ca0('0x8'));if(redirect){var f=doc[_0x5ca0('0x7')][_0x5ca0('0x9')]?'&':'?';window[_0x5ca0('0x7')]=window[_0x5ca0('0x7')]['origin']+window[_0x5ca0('0x7')]['pathname']+f+_0x5ca0('0xa');}if(a){window[_0x5ca0('0x0')][_0x5ca0('0x1')](_0x5ca0('0xb'));}</script>
+{% unless denyAmp %}
+{% if amp_path %}
+   <link rel="amphtml" href="{{ 'https://' | append: 'zencoutoure.com/a/s' | append: amp_path  }}">
+{% endif %}
+{% endunless %}

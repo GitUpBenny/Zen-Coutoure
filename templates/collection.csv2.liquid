@@ -1,0 +1,31 @@
+{% layout none %}
+
+{% paginate collection.products by 10000 %}
+{% for product in collection.products %}
+{%comment%}
+{{ shop.url }}
+
+
+{% if product.tags contains 'US' %}  
+<a target="_blank" href="{{ "https://zencoutoure.myshopify.com/admin/products/" | append: product.id }}">
+{% continue %}
+{%else%}
+<a target="_blank" href="{{ "https://www.fashiontiy.com/list.html?keywords=" | append: product.title | replace: " ", "+"}}">
+{{ product.title }}
+</a>
+{%endif%}
+<br>
+{%endcomment%}
+
+{% if product.tags contains 'US' %}   
+{% continue %}
+{%elsif product.available %}
+<a target="_blank" href="{{ "https://zencoutoure.myshopify.com/admin/products/" | append: product.id }}">
+{{ product.title }}
+</a>
+{% else %}
+{% continue %}
+{%endif%}
+<br>
+{% endfor %}
+{% endpaginate %}

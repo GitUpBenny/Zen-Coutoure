@@ -1,0 +1,72 @@
+<div class="wrapper-top-cart">
+  <h2 class="header-cart">
+    <span data-translate="cart.general.shopping_cart">
+      {{ 'cart.general.shopping_cart' | t }}
+    </span>
+
+    <button onclick="location.href='javascript:void(0)'" type="button" class="close-cart" title="Close" href="javascript:void(0)" rel="nofollow">
+      Close
+      {% include 'icon-close' %}
+    </button>
+
+  </h2>
+  <div class="dropdown-cart"> 
+    <div class="no-items">
+      <div class="alert alert-warning">{{ 'cart.general.empty' | t }}</div>
+      <div class="text-continue">
+        <button class="btn" onclick="location.href='javascript:void(0)'" type="button" rel="nofollow" {% if settings.enable_multilang %}data-translate="cart.ajax_cart.continue_shopping"{% endif %}>
+          {{ 'cart.ajax_cart.continue_shopping' | t }}
+        </button>
+      </div>
+    </div>
+    <div class="has-items">
+      <ol class="mini-products-list">  
+        {% for item in cart.items %}
+        <li class="item" id="cart-item-{{item.id}}">
+          <a href="{{item.url}}" class="product-image">
+            <img src="{{'preload-img-jp.jpg' | file_url }}" data-src="{{ item.image | product_img_url: 'small' }}" alt="{{item.title}}">
+          </a>
+          <div class="product-details">
+            <a href="javascript:void(0)" rel="nofollow" title="{{ 'cart.general.remove' | t }}" class="btn-remove">{% include 'icon-close' %}</a>
+            <p class="product-name">
+              <a href="{{item.url}}">
+                {% include 'multilang' with item.product.title %}
+              </a>
+            </p>
+            <div class="option">
+              {% if item.product.variants.size != 0 %}
+              {% unless item.variant.title contains 'Default' %}
+              <small>{{ item.variant.title }}</small>
+              {% endunless %}
+              {% endif %}
+            </div>
+            <div class="cart-collateral"><span class="price">{{item.quantity}} x {{item.price | money}}</span></div>
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+      <div class="shopping_cart_footer">
+        <div class="summary">                
+          <p class="total">
+            <span class="label"><span {% if settings.enable_multilang %}data-translate="cart.label.total"{% endif %}>{{ 'cart.label.total' | t }}</span>:</span>
+            <span class="price">{{cart.total_price | money}}</span> 
+          </p>
+        </div>
+        <div class="actions">
+
+          <button class="btn" onclick="window.location='/checkout'" {% if settings.enable_multilang %}data-translate="cart.general.checkout"{% endif %}>
+            {{ 'cart.general.checkout' | t }}
+          </button>  
+
+          <a class="btn" href="/cart" {% if settings.enable_multilang %}data-translate="cart.general.view_cart"{% endif %}>
+            <span data-translate="cart.label.or">
+              {{ 'cart.label.or' | t }}
+              {{ 'cart.general.view_cart' | t }}
+            </span>
+          </a>
+
+        </div>    
+      </div>
+    </div>
+  </div>
+</div>

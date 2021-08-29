@@ -1,0 +1,193 @@
+{% if settings.enable_shopify_payments_currencies %}
+{% case cart.currency.iso_code %}
+  {% when 'AUD' %}
+  	{% capture currency_flag %}d4e9cde3edb3e1732ec50170e158d750.svg{% endcapture %}
+  {% when 'CAD' %}
+  	{% capture currency_flag %}422898ab4299eb270f856e6c1b8d2250.svg{% endcapture %}
+  {% when 'DKK' %}
+  	{% capture currency_flag %}e60c493fdbe69069d943ecc37287aa90.svg{% endcapture %}
+  {% when 'EUR' %}
+  	{% capture currency_flag %}9886b4168efb1ebf48006093aa9807c5.svg{% endcapture %}
+  {% when 'GBP' %}
+  	{% capture currency_flag %}f9bbc4885a348eff84e4ef4155121fae.svg{% endcapture %}
+  {% when 'HKD' %}
+  	{% capture currency_flag %}d242bcbc3c871d94219f0b46ce803944.svg{% endcapture %}
+  {% when 'JPY' %}
+  	{% capture currency_flag %}8a87f52e21f7e84a157d6d425e957736.svg{% endcapture %}
+  {% when 'NZD' %}
+  	{% capture currency_flag %}cacb9f87701ae2707676064d036a97b2.svg{% endcapture %}
+  {% when 'SGD' %}
+  	{% capture currency_flag %}e6485856d9a242f47cbc1f396429aa7c.svg{% endcapture %}
+  {% when 'USD' %}
+  	{% capture currency_flag %}7f0109d94c888a663452af48e2d324d7.svg{% endcapture %}
+  {% else %}
+  	{% capture currency_flag %}7f0109d94c888a663452af48e2d324d7.svg{% endcapture %}
+{% endcase %}
+<ul id="currencies" class="currency-block">
+
+  <h5>{% include 'multilang' with settings.header_cur %}</h5>
+  
+  {%- for currency in shop.enabled_currencies -%}
+  {% case currency.iso_code %}
+  {% when 'AUD' %}
+  {% capture currency_flag %}d4e9cde3edb3e1732ec50170e158d750.svg{% endcapture %}
+  {% when 'CAD' %}
+  {% capture currency_flag %}422898ab4299eb270f856e6c1b8d2250.svg{% endcapture %}
+  {% when 'DKK' %}
+  {% capture currency_flag %}e60c493fdbe69069d943ecc37287aa90.svg{% endcapture %}
+  {% when 'EUR' %}
+  {% capture currency_flag %}9886b4168efb1ebf48006093aa9807c5.svg{% endcapture %}
+  {% when 'GBP' %}
+  {% capture currency_flag %}f9bbc4885a348eff84e4ef4155121fae.svg{% endcapture %}
+  {% when 'HKD' %}
+  {% capture currency_flag %}d242bcbc3c871d94219f0b46ce803944.svg{% endcapture %}
+  {% when 'JPY' %}
+  {% capture currency_flag %}8a87f52e21f7e84a157d6d425e957736.svg{% endcapture %}
+  {% when 'NZD' %}
+  {% capture currency_flag %}cacb9f87701ae2707676064d036a97b2.svg{% endcapture %}
+  {% when 'SGD' %}
+  {% capture currency_flag %}e6485856d9a242f47cbc1f396429aa7c.svg{% endcapture %}
+  {% when 'USD' %}
+  {% capture currency_flag %}7f0109d94c888a663452af48e2d324d7.svg{% endcapture %}
+  {% else %}
+  {% capture currency_flag %}7f0109d94c888a663452af48e2d324d7.svg{% endcapture %}
+  {% endcase %}
+  <li {% if currency == cart.currency %}class="active"{% endif %}>
+    <a class="dropdown-item" href="#" data-currency="{{currency.iso_code}}">
+      <span class="img-icon">
+        <img class="lazyload" src="https://cdn.shopifycloud.com/web/assets/{{currency_flag}}" alt="{{currency.iso_code}}" />
+      </span>
+      <span class="text">
+        {{currency.iso_code}}
+      </span>       
+    </a>
+  </li>
+  {%- endfor -%}
+  
+</ul>
+{% form 'currency' %}
+  <select name="currency" style="display:none;">
+    {%- for currency in shop.enabled_currencies -%}
+      {%- if currency == cart.currency -%}
+        <option selected="true">{{currency.iso_code}}</option>
+      {%- else -%}
+        <option>{{currency.iso_code}}</option>
+      {%- endif -%}
+    {%- endfor -%}
+  </select>
+{% endform %}
+
+{% else %}
+{% if settings.enable_multiple_currencies %}
+<ul id="currencies">
+  
+  <h5>{% include 'multilang' with settings.header_cur %}</h5>
+  
+  {% assign currency_1_length = settings.currency_1_unit | size %}
+  {% if currency_1_length > 0 %}
+  <li data-currency="{{settings.currency_1_unit}}" {% if shop.currency == settings.currency_1_unit %} class="active" {% endif %} value="{{settings.currency_1_unit}}">
+    <a href="#">
+      <span class="icon"><img class="lazyload" data-src="{{'i-currency-1.png" | asset_url }}" alt="{{settings.currency_1_unit}}" /></span>
+      <span class="text">{{settings.currency_1_unit}}</span>
+    </a>
+  </li> 
+  {% endif %}
+  
+  {% assign currency_2_length = settings.currency_2_unit | size %}
+  {% if currency_2_length > 0 %}
+  <li data-currency="{{settings.currency_2_unit}}" {% if shop.currency == settings.currency_2_unit %} class="active" {% endif %} value="{{settings.currency_2_unit}}">
+    <a href="#">
+      <span class="icon"><img class="lazyload" data-src="{{'i-currency-2.png" | asset_url }}" alt="{{settings.currency_2_unit}}" /></span>
+      <span class="text">{{settings.currency_2_unit}}</span>
+    </a>
+  </li> 
+  {% endif %}
+  
+  {% assign currency_3_length = settings.currency_3_unit | size %}
+  {% if currency_3_length > 0 %}
+  <li data-currency="{{settings.currency_3_unit}}" {% if shop.currency == settings.currency_3_unit %} class="active" {% endif %} value="{{settings.currency_3_unit}}">
+    <a href="#">
+      <span class="icon"><img class="lazyload" data-src="{{'i-currency-3.png" | asset_url }}" alt="{{settings.currency_3_unit}}" /></span>
+      <span class="text">{{settings.currency_3_unit}}</span>
+    </a>
+  </li> 
+  {% endif %}
+  
+  {% assign currency_4_length = settings.currency_4_unit | size %}
+  {% if currency_4_length > 0 %}
+  <li data-currency="{{settings.currency_4_unit}}" {% if shop.currency == settings.currency_4_unit %} class="active" {% endif %} value="{{settings.currency_4_unit}}">
+    <a href="#">
+      <span class="icon"><img class="lazyload" data-src="{{'i-currency-4.png" | asset_url }}" alt="{{settings.currency_4_unit}}" /></span>
+      <span class="text">{{settings.currency_4_unit}}</span>
+    </a>
+  </li> 
+  {% endif %}
+  
+  {% assign currency_5_length = settings.currency_5_unit | size %}
+  {% if currency_5_length > 0 %}
+  <li data-currency="{{settings.currency_5_unit}}" {% if shop.currency == settings.currency_5_unit %} class="active" {% endif %} value="{{settings.currency_5_unit}}">
+    <a href="#">
+      <span class="icon"><img class="lazyload" data-src="{{'i-currency-5.png" | asset_url }}" alt="{{settings.currency_5_unit}}" /></span>
+      <span class="text">{{settings.currency_5_unit}}</span>
+    </a>
+  </li> 
+  {% endif %}
+  
+  {% assign currency_6_length = settings.currency_6_unit | size %}
+  {% if currency_6_length > 0 %}
+  <li data-currency="{{settings.currency_6_unit}}" {% if shop.currency == settings.currency_6_unit %} class="active" {% endif %} value="{{settings.currency_6_unit}}">
+    <a href="#">
+      <span class="icon"><img class="lazyload" data-src="{{'i-currency-6.png" | asset_url }}" alt="{{settings.currency_6_unit}}" /></span>
+      <span class="text">{{settings.currency_6_unit}}</span>
+    </a>
+  </li> 
+  {% endif %}
+  
+  {% assign currency_7_length = settings.currency_7_unit | size %}
+  {% if currency_7_length > 0 %}
+  <li data-currency="{{settings.currency_7_unit}}" {% if shop.currency == settings.currency_7_unit %} class="active" {% endif %} value="{{settings.currency_7_unit}}">
+    <a href="#">
+      <span class="icon"><img class="lazyload" data-src="{{'i-currency-7.png" | asset_url }}" alt="{{settings.currency_7_unit}}" /></span>
+      <span class="text">{{settings.currency_7_unit}}</span>
+    </a>
+  </li> 
+  {% endif %}
+  
+  {% assign currency_8_length = settings.currency_8_unit | size %}
+  {% if currency_8_length > 0 %}
+  <li data-currency="{{settings.currency_8_unit}}" {% if shop.currency == settings.currency_8_unit %} class="active" {% endif %} value="{{settings.currency_8_unit}}">
+    <a href="#">
+      <span class="icon"><img class="lazyload" data-src="{{'i-currency-8.png" | asset_url }}" alt="{{settings.currency_8_unit}}" /></span>
+      <span class="text">{{settings.currency_8_unit}}</span>
+    </a>
+  </li> 
+  {% endif %}
+  
+  {% assign currency_9_length = settings.currency_9_unit | size %}
+  {% if currency_9_length > 0 %}
+  <li data-currency="{{settings.currency_9_unit}}" {% if shop.currency == settings.currency_9_unit %} class="active" {% endif %} value="{{settings.currency_9_unit}}">
+    <a href="#">
+      <span class="icon"><img class="lazyload" data-src="{{'i-currency-9.png" | asset_url }}" alt="{{settings.currency_9_unit}}" /></span>
+      <span class="text">{{settings.currency_9_unit}}</span>
+    </a>
+  </li> 
+  {% endif %}
+  
+  {% assign currency_10_length = settings.currency_10_unit | size %}
+  {% if currency_10_length > 0 %}
+  <li data-currency="{{settings.currency_10_unit}}" {% if shop.currency == settings.currency_10_unit %} class="active" {% endif %} value="{{settings.currency_10_unit}}">
+    <a href="#">
+      <span class="icon"><img class="lazyload" data-src="{{'i-currency-10.png" | asset_url }}" alt="{{settings.currency_10_unit}}" /></span>
+      <span class="text">{{settings.currency_10_unit}}</span>
+    </a>
+  </li> 
+  {% endif %}
+  
+</ul>
+
+<div class="currencies_modal" style="display:none">
+  <div {% if settings.enable_multilang %}data-translate="general.currency.change_text"{% endif %}>{{ 'general.currency.change_text' | t }}</div><span></span>
+</div>
+
+{% endif %}
+{% endif %}

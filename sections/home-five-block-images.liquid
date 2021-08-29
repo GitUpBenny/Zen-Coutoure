@@ -1,0 +1,407 @@
+<section class="five-block-image">
+  <div class="container">
+    <div class="row">
+      {% if section.settings.dpl_clmn_left %}
+      <div class="column-left {% if section.settings.dpl_clmn_right %}col-md-6 {% else %}col-md-12{% endif %}">
+
+        {% if section.settings.dpl_left_img_1 %}
+        <figure class="img-itm">
+          <a href="{{ section.settings.left_link_1 }}" title="{{ section.settings.left_hd_1 }}">            
+            {% if section.settings.left_img_1 != blank %}
+            <img src="{{ section.settings.left_img_1 | img_url: '100x', format: 'pjpg'}}" alt="{{ section.settings.left_hd_1 | escape }}"
+                 data-src="{{ section.settings.left_img_1 | img_url: '1024x'}}"
+                 data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                 data-aspectratio="{{ section.settings.left_img_1 | img_url: '1024x'}}"
+                 data-sizes="auto">
+            {% else %}
+            <span class="not_img">570 x 570px</span>
+            {% endif %}
+            <figcaption>              
+              {% include 'multilang' with section.settings.left_hd_1 %}            
+            </figcaption>            
+          </a>
+        </figure>
+        {% endif %}
+
+        {% if section.settings.dpl_left_img_2 %}
+        <figure class="img-itm">
+          <a href="{{ section.settings.left_link_2 }}" title="{{ section.settings.left_hd_2 }}">            
+            {% if section.settings.left_img_2 != blank %}
+            <img src="{{ section.settings.left_img_2 | img_url: '100x'}}" alt="{{ section.settings.left_hd_2 | escape }}"
+                 data-src="{{ section.settings.left_img_2 | img_url: '1024x'}}"
+                 class="lazyload"
+                 data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                 data-aspectratio="{{ section.settings.left_img_2 | img_url: '1024x'}}"
+                 data-sizes="auto">
+            {% else %}
+            <span class="not_img">570 x 570px</span> 
+            {% endif %}
+            <figcaption>              
+              {% include 'multilang' with section.settings.left_hd_2 %}            
+            </figcaption>            
+          </a>
+        </figure>
+        {% endif %}
+
+        {% if section.settings.dpl_left_img_3 %}
+        <figure class="img-itm">
+          <a href="{{ section.settings.left_link_3 }}" title="{{ section.settings.left_hd_3 }}">            
+            {% if section.settings.left_img_3 != blank %}
+            <img src="{{ section.settings.left_img_3 | img_url: '100x'}}" alt="{{ section.settings.left_hd_3 | escape }}"
+                 data-src="{{ section.settings.left_img_3 | img_url: '1024x'}}"
+                 class="lazyload"
+                 data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                 data-aspectratio="{{ section.settings.left_img_3 | img_url: '1024x'}}"
+                 data-sizes="auto">
+            {% else %}
+            <span class="not_img">570 x 570px</span> 
+            {% endif %}
+            <figcaption>              
+              {% include 'multilang' with section.settings.left_hd_3 %}            
+            </figcaption>            
+          </a>
+        </figure>
+        {% endif %}
+
+      </div>
+      {% endif %}
+
+      {% if section.settings.dpl_clmn_right %}
+      <div class="column-right {% if section.settings.dpl_clmn_left %}col-md-6 {% else %}col-md-12{% endif %}">
+        <div class="row">
+          {% if section.settings.dpl_right_img_1 %}
+          <figure class="img-itm col-6">
+            <a href="{{ section.settings.right_link_1 }}" title="{{ section.settings.right_hd_1 }}">            
+              {% if section.settings.right_img_1 != blank %}
+              <img src="{{ section.settings.right_img_1 | img_url: '100x' }}" alt="{{ section.settings.right_hd_1 | escape }}"
+                   data-src="{{ section.settings.right_img_1 | img_url: '1024x'}}"
+                   class="lazyload"
+                   data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                   data-aspectratio="{{ section.settings.right_img_1 | img_url: '1024x' }}"
+                   data-sizes="auto">
+              {% else %}
+              <span class="not_img">270 x 270px</span>
+              {% endif %}
+              <figcaption>              
+                {% include 'multilang' with section.settings.right_hd_1 %}            
+              </figcaption>            
+            </a>
+          </figure>
+          {% endif %}
+
+          {% if section.settings.dpl_right_img_2 %}
+          <figure class="img-itm col-6">
+            <a href="{{ section.settings.right_link_2 }}" title="{{ section.settings.right_hd_2 }}">            
+              {% if section.settings.right_img_2 != blank %}
+              <img src="{{ section.settings.right_img_2 | img_url: '100x' }}" alt="{{ section.settings.right_hd_2 | escape }}"
+                   data-src="{{ section.settings.right_img_2 | img_url: '1024x' }}"
+                   class="lazyload"
+                   data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                   data-aspectratio="{{ section.settings.right_img_2 | img_url: '1024x' }}"
+                   data-sizes="auto">
+              {% else %}
+              <span class="not_img">270 x 270px</span> 
+              {% endif %}
+              <figcaption>              
+                {% include 'multilang' with section.settings.right_hd_2 %}            
+              </figcaption>            
+            </a>
+          </figure>
+          {% endif %}
+
+          {% if section.settings.dpl_right_img_3 %}
+          <figure class="img-itm col-6">
+            <a href="{{ section.settings.right_link_3 }}" title="{{ section.settings.right_hd_3 }}">            
+              {% if section.settings.right_img_3 != blank %}
+              <img src="{{ section.settings.right_img_3 | img_url: '100x' }}" alt="{{ section.settings.right_hd_3 | escape }}"
+                   data-src="{{ section.settings.right_img_3 | img_url: '1024x'}}"
+                   data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                   data-aspectratio="{{ section.settings.right_img_3 | img_url: '1024x'}}"
+                   data-sizes="auto">
+              {% else %}
+              <span class="not_img">270 x 270px</span> 
+              {% endif %}
+              <figcaption>              
+                {% include 'multilang' with section.settings.right_hd_3 %}            
+              </figcaption>            
+            </a>
+          </figure>
+          {% endif %}
+
+          {% if section.settings.dpl_right_img_4 %}
+          <figure class="img-itm col-6">
+            <a href="{{ section.settings.right_link_4 }}" title="{{ section.settings.right_hd_4 }}">            
+              {% if section.settings.right_img_4 != blank %}
+              <img src="{{ section.settings.right_img_4 | img_url: '100x'}}" alt="{{ section.settings.right_hd_4 | escape }}"
+                   data-src="{{ section.settings.right_img_4 | img_url: '1024x' }}"
+                   data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                   data-aspectratio="{{ section.settings.right_img_4 | img_url: '1024x' }}"
+                   data-sizes="auto">
+              {% else %}
+              <span class="not_img">270 x 270px</span> 
+              {% endif %}
+              <figcaption>              
+                {% include 'multilang' with section.settings.right_hd_4 %}            
+              </figcaption>            
+            </a>
+          </figure>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+      
+    </div>
+  </div>
+</section>
+
+<style>
+  .five-block-image .column-left .img-itm figcaption{
+    color:{{ section.settings.color_header }};
+    font-size: {{ section.settings.font_size_header }};
+  }
+
+  .five-block-image .column-right .img-itm figcaption{
+    color:{{ section.settings.color_header_2 }};
+    font-size: {{ section.settings.font_size_header_2 }};
+  }
+  
+  .five-block-image .img-itm figcaption span:before{
+    background:{{ section.settings.color_header }};
+  }
+  
+  .five-block-image .column-left > .img-itm:not(:first-child){
+    display:none;
+  }
+</style>
+
+{% if section.settings.dpl_clmn_left %}
+<script>
+  $(function() {  
+    function initslider(){
+      var slider =$('.five-block-image .column-left');
+      if(slider.length){
+        $(slider).not('.slick-initialized').slick({
+          dots:true, 
+          autoplay:true, 
+          arrows: false,
+          autoplaySpeed:5000 
+        });
+      }
+    }
+    initslider();
+    $(document)
+    .on( 'shopify:section:load', initslider )
+    .on( 'shopify:section:unload', initslider );
+  });
+</script>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Five Images block",
+    "settings": [
+      {
+        "type" : "header",
+        "content" : "Column Left "
+      },
+      {
+        "type": "checkbox",
+        "id" : "dpl_clmn_left",
+        "label" : "Display Column Left",
+        "default" : true
+      },
+      {
+        "type" : "text",
+        "id": "font_size_header",
+        "label" : "Font size header",
+        "default" : "20px"
+      },
+      {
+        "type" : "color",
+        "id": "color_header",
+        "label": "header color",
+        "default" : "#fff"
+      },
+      {
+          "type" : "checkbox",
+          "id" : "dpl_left_img_1",
+          "label" : "Display Left image 1",
+          "default" : true
+      },
+      {
+        "type" : "image_picker",
+        "id" : "left_img_1",
+        "label" : "Left Image 1"
+      },
+      {
+        "type" : "text",
+        "id" : "left_hd_1",
+        "label" : "Header 1",
+        "default" : "Blazer & Suits"
+      },
+      {
+        "type": "url",
+        "id" : "left_link_1",
+        "label" : "Image link 1"
+      },
+      {
+          "type" : "checkbox",
+          "id" : "dpl_left_img_2",
+          "label" : "Display Left image 2",
+          "default" : true
+      },
+      {
+        "type" : "image_picker",
+        "id" : "left_img_2",
+        "label" : "Left Image 2"
+      },
+      {
+        "type" : "text",
+        "id" : "left_hd_2",
+        "label" : "Header 2",
+        "default" : "Blazer & Suits"
+      },
+      {
+        "type": "url",
+        "id" : "left_link_2",
+        "label" : "Image link 2"
+      },
+      {
+          "type" : "checkbox",
+          "id" : "dpl_left_img_3",
+          "label" : "Display Left image 3",
+          "default" : true
+      },
+      {
+        "type" : "image_picker",
+        "id" : "left_img_3",
+        "label" : "Left Image 3"
+      },
+      {
+        "type" : "text",
+        "id" : "left_hd_3",
+        "label" : "Header 3",
+        "default" : "Blazer & Suits"
+      },
+      {
+        "type": "url",
+        "id" : "left_link_3",
+        "label" : "Image link 3"
+      },
+      {
+        "type" : "header",
+        "content" : "Column Right"
+      },
+      {
+        "type": "checkbox",
+        "id" : "dpl_clmn_right",
+        "label" : "Display Column Right",
+        "default" : true
+      },
+      {
+        "type" : "text",
+        "id": "font_size_header_2",
+        "label" : "Font size header",
+        "default" : "20px"
+      },
+      {
+        "type" : "color",
+        "id": "color_header_2",
+        "label": "header color",
+        "default" : "#fff"
+      },
+      {
+          "type" : "checkbox",
+          "id" : "dpl_right_img_1",
+          "label" : "Display right image 1",
+          "default" : true
+      },
+      {
+        "type" : "image_picker",
+        "id" : "right_img_1",
+        "label" : "Right Image 1"
+      },
+      {
+        "type" : "text",
+        "id" : "right_hd_1",
+        "label" : "Header 1",
+        "default" : "Shoes"
+      },
+      {
+        "type": "url",
+        "id" : "right_link_1",
+        "label" : "Image link 1"
+      },
+      {
+          "type" : "checkbox",
+          "id" : "dpl_right_img_2",
+          "label" : "Display right image 2",
+          "default" : true
+      },
+      {
+        "type" : "image_picker",
+        "id" : "right_img_2",
+        "label" : "Right Image 2"
+      },
+      {
+        "type" : "text",
+        "id" : "right_hd_2",
+        "label" : "Header 2",
+        "default" : "Handbags"
+      },
+      {
+        "type": "url",
+        "id" : "right_link_2",
+        "label" : "Image link 2"
+      },
+      {
+          "type" : "checkbox",
+          "id" : "dpl_right_img_3",
+          "label" : "Display right image 3",
+          "default" : true
+      },
+      {
+        "type" : "image_picker",
+        "id" : "right_img_3",
+        "label" : "Right Image 3"
+      },
+      {
+        "type" : "text",
+        "id" : "right_hd_3",
+        "label" : "Header 3",
+        "default" : "Jewelry"
+      },
+      {
+        "type": "url",
+        "id" : "right_link_3",
+        "label" : "Image link 3"
+      },
+      {
+          "type" : "checkbox",
+          "id" : "dpl_right_img_4",
+          "label" : "Display right image 4",
+          "default" : true
+      },
+      {
+        "type" : "image_picker",
+        "id" : "right_img_4",
+        "label" : "Right Image 4"
+      },
+      {
+        "type" : "text",
+        "id" : "right_hd_4",
+        "label" : "Header 4",
+        "default" : "Skirts"
+      },
+      {
+        "type": "url",
+        "id" : "right_link_4",
+        "label" : "Image link 4"
+      }
+    ],
+	"presets": [{
+      "name": "Five Images block",
+      "category": "block images"
+    }]
+  }
+{% endschema %}

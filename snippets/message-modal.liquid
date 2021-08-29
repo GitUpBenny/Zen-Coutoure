@@ -1,0 +1,42 @@
+<div class="loading-modal modal" >
+  <i class="fa fa-circle-o-notch fa-spin"></i>
+</div>
+
+<div class="lookbook-modal">
+  <a href="javascript:void(0)" rel="nofollow" class="close-modal">{% include 'icon-close' %}</a>
+  <div class="lookbook-content"></div>
+</div>
+
+<div class="ajax-error-modal modal">
+  <div class="modal-inner alert alert-danger">
+    <div class="ajax-error-title" {% if settings.enable_multilang %}data-translate="cart.ajax_cart.error"{% endif %}>{{ 'cart.ajax_cart.error' | t }}</div>
+    <div class="ajax-error-message"></div>
+  </div>
+</div>
+
+<div class="ajax-success-modal modal">
+
+  <div class="overlay"></div>
+  <div class="ajax-container">
+    <a href="javascript:void(0)" rel="nofollow" class="close-modal">{% include 'icon-close' %}</a>
+    <div class="content">
+      <div class="cart-page"></div>
+      <div class="ajax-load-content"></div>     
+    </div>
+  </div>
+
+</div>
+
+<div class="newsletter-success-modal">
+  <div class="modal-overlay"></div>
+  <div class="halo-modal-content">
+    <a class="close close-modal" title="{{ 'cart.ajax_cart.close' | t }}">
+      {% include 'icon-close' %}
+    </a>
+
+    <div class="halo-modal-body">
+      <i class="fa fa-check" aria-hidden="true"></i>
+      <span>{{settings.newssletter_success_text}}</span>
+    </div>
+  </div>     
+</div>
