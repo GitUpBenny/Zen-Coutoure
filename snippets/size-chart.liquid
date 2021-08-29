@@ -18,6 +18,7 @@
       </div>
       <div class="modal-body">
         <div class="img-size-chart">
+        <h1>What is happening with</h1>
           {% if settings.size_chart == 'product_vendor' %}          
           {% capture img_vendor %}{{ product.vendor | handle | append: '-sizechart.jpg' | file_url }}{% endcapture %}
           <img src="{{'preload-img-jp.jpg' | file_url }}" data-src="{{ img_vendor }}" alt="{{ section.settings.custom_size_chart_title }}"/>
