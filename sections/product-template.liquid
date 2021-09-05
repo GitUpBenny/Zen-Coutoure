@@ -362,6 +362,12 @@
         
         {% else %} 
         <div class="groups-btn">
+        <div data-app="eastsideco_sizeGuides"
+            data-shop="{{ shop.permanent_domain }}"
+            data-tags="{{ product.tags | join:',' | escape }}"
+            data-metafields="{{ product.metafields.esc-size-matters.tag }}"
+            data-popup="button">
+        </div>
           <input type="submit" name="add" class="btn" {% if settings.enable_multilang %}data-translate="products.product.unavailable"{%endif%} id="product-add-to-cart" disabled value="{{ 'products.product.unavailable' | t }}">
         </div>
           	          
