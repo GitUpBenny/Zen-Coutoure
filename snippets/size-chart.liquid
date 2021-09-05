@@ -18,8 +18,11 @@
       </div>
       <div class="modal-body">
         <div class="img-size-chart">
-        <div class="mysizeid-widget">
-        
+        <div data-app="eastsideco_sizeGuides"
+            data-shop="{{ shop.permanent_domain }}"
+            data-tags="{{ product.tags | join:',' | escape }}"
+            data-metafields="{{ product.metafields.esc-size-matters.tag }}"
+            data-popup="">
         </div>
           {% if settings.size_chart == 'product_vendor' %}          
           {% capture img_vendor %}{{ product.vendor | handle | append: '-sizechart.jpg' | file_url }}{% endcapture %}
