@@ -339,7 +339,12 @@
               <a href="javascript:void(0)" rel="nofollow" class="inc button"></a>
             </div>
 
-            
+            <div data-app="eastsideco_sizeGuides"
+                data-shop="{{ shop.permanent_domain }}"
+                data-tags="{{ product.tags | join:',' | escape }}"
+                data-metafields="{{ product.metafields.esc-size-matters.tag }}"
+                data-popup="">
+            </div> 
 
             {% if section.settings.display_subtotal and product.available %} 
             <div class="total-price">
@@ -362,12 +367,6 @@
         
         {% else %} 
         <div class="groups-btn">
-        <div data-app="eastsideco_sizeGuides"
-            data-shop="{{ shop.permanent_domain }}"
-            data-tags="{{ product.tags | join:',' | escape }}"
-            data-metafields="{{ product.metafields.esc-size-matters.tag }}"
-            data-popup="button">
-        </div>
           <input type="submit" name="add" class="btn" {% if settings.enable_multilang %}data-translate="products.product.unavailable"{%endif%} id="product-add-to-cart" disabled value="{{ 'products.product.unavailable' | t }}">
         </div>
           	          
